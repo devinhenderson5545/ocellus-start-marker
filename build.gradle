@@ -1,0 +1,36 @@
+plugins { id 'java' }
+repositories {
+    maven { url = 'https://repo.runelite.net'; content { includeGroupByRegex('net\\.runelite.*') } }
+    mavenCentral()
+}
+dependencies {
+    compileOnly 'net.runelite:client:1.13.7'
+    testImplementation 'net.runelite:client:1.13.7'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.11.0'
+}
+group = 'com.docsultan.ocellusstart'
+version = '0.1.0'
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release.set(11) }
+test { systemProperty 'java.awt.headless', 'true' }
+tasks.register('run', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.docsultan.ocellusstart.OcellusStartLauncher'
+    jvmArgs '-ea'
+    args '--developer-mode'
+}
+tasks.register('launcherJar', Jar) {
+    dependsOn testClasses
+    archiveClassifier = 'launcher'
+    from(sourceSets.test.output) { include 'com/docsultan/ocellusstart/OcellusStartLauncher.class' }
+}
+tasks.register('testerZip', Zip) {
+    dependsOn jar, launcherJar, test
+    archiveFileName = "ocellus-start-marker-${project.version}-test.zip"
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+    into('ocellus-start-marker-test') {
+        from('Start-Ocellus-Test.cmd', 'README.md', 'TESTING.md', 'LICENSE')
+        into('lib') { from configurations.testRuntimeClasspath; from tasks.jar; from tasks.launcherJar }
+    }
+}
