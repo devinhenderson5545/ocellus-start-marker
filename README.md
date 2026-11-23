@@ -1,48 +1,47 @@
 # Ocellus Start Marker
 
-Places a small Bandos icon and optional flashing arrow in the quadrant diagonally opposite
-the Bandosian Censer, before Ocellus phase two. It hides on the first detected P2
-portal or a later-phase NPC. It does not require Party, move your character, or
-choose movement tiles during the fight.
+Shows a Bandos icon and optional flashing arrow in the quadrant diagonally opposite
+the Bandosian Censer, to help your group plan its position before Ocellus phase two
+in The Fractured Archive.
 
-Settings: distance from the room centre (default 4 tiles along each axis), icon
-height (32 pixels), optional tile outline and outline colour. The arrow is enabled
-by default and flashes on/off once per second. It has independent visibility,
-flashing, colour, size and flash-cycle settings; disable flashing for a steady
-arrow. The Bandos icon can also be hidden independently. The pointer is drawn by
-this overlay, so it does not replace another plugin's game hint arrow and requires
-no Quest Helper installation. The supplied Bandos
-PNG is bundled unchanged; it is user-provided OSRS game artwork, attributed to Jagex.
-The code license does not claim ownership of that artwork.
+## Use
 
-## Test build
+Enable **Ocellus Start Marker** in RuneLite. The marker appears in Ocellus's room
+during the intro or phase one when the censer can be identified. It hides when a
+phase-two portal or a later phase is detected, and when you leave the room.
 
-Extract `ocellus-start-marker-0.1.0-test.zip` and run `Start-Ocellus-Test.cmd`.
-This starts a development RuneLite client; it does not install into normal RuneLite.
-Use your established development-client login process. Enable **Ocellus Start Marker**.
-This plugin requests no account credentials or network access.
+The marker is a planning aid, not an instruction to remain on that tile during
+phase one. Check the position against your group's strategy.
 
-Build with JDK 11 or later: `gradlew.bat test testerZip`. Run from source with
-`gradlew.bat run`. The launcher uses normal RuneLite's bundled Java, falling back to
-JAVA_HOME. No game client is opened by the tests.
+## Settings
 
-## Evidence and limits
+- **Distance from centre:** 2-8 tiles along each axis into the opposite quadrant;
+  defaults to 4. This is not the total diagonal distance.
+- **Show Bandos icon / Icon height:** toggle the symbol and choose a height of
+  16-64 pixels; defaults to 32.
+- **Outline target tile / Tile colour:** toggle the tile border and set its colour
+  and opacity.
+- **Show arrow / Arrow size / Arrow colour:** toggle the pointer and change its
+  size, colour and opacity independently of the icon.
+- **Flash arrow / Flash cycle (ms):** choose a flashing or steady arrow. Flashing
+  is enabled by default, with a complete on/off cycle every 1,000 milliseconds.
+  The cycle can be set from 250 to 2,000 milliseconds.
 
-- Template region 16472 comes from Blert's TFA Location enum:
-  https://github.com/blert-io/plugin/blob/main/src/main/java/io/blert/challenges/tfa/Location.java
-- RuneLite's generated game values identify Bandosian Censers 62693/62694 and
-  quadrant portal walls 62684/62685:
-  https://github.com/runelite/runelite/blob/master/runelite-api/src/main/java/net/runelite/api/gameval/ObjectID1.java
-- Intro NPCs 16671-16673 and P1 16674 allow display; P2/P3 16675-16677 suppress it.
-- Centre region tile (31,41), template plane 1, was inferred from the symmetric
-  saved room tile markers supplied locally by the requester. Default targets are
-  (27,37), (35,37), (27,45), (35,45). **This exact placement and the portal lifecycle
-  still require a live encounter check.** Passing tests do not establish that the
-  proposed tile is safe or optimal for every strategy.
-- Both active and inactive censers, transformed objects, scene reloads and rotated
-  instances are handled. Missing/ambiguous censers or duplicate target chunks hide
-  the marker instead of guessing. Requires the Ocellus room and an intro/P1 NPC.
-- The marker is a pre-P2 planning aid, not an instruction to remain there during P1.
+The arrow does not replace other plugins' game hint arrows. Quest Helper and
+RuneLite Party are not required. The plugin does not move your character, automate
+game inputs, request account credentials or use a network connection.
 
-Submitted builds require Plugin Hub review before appearing in normal RuneLite.
-Live encounter testing remains pending; see TESTING.md for the short live check.
+## Limitations
+
+The exact marker placement and portal-transition timing still require live
+encounter validation. The marked tile is not guaranteed to be safe or optimal
+for every strategy. Adjust **Distance from centre** to suit your group.
+
+Missing or ambiguous censer information hides the marker rather than choosing a
+quadrant. If it is absent, check that the plugin and at least one marker option
+are enabled, and that Ocellus has not reached phase two.
+
+## Credits
+
+The Bandos symbol is OSRS game artwork attributed to Jagex. The code's BSD 2-Clause
+license does not claim ownership of that artwork.

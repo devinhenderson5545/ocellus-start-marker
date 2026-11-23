@@ -14,7 +14,8 @@
    that the marker returns in the correct opposite quadrant.
 6. Exit, hop or restart: no old marker should survive outside the relevant room.
 
-Send a screenshot before the portals and a short clip of their first appearance.
+Useful evidence includes a screenshot before the portals and a short clip of their
+first appearance.
 The automated suite checks all four quadrant choices, all four chunk rotations,
 missing/ambiguous data, object transformations, portal/phase suppression and client
 lifecycle handling. It cannot verify actual server object timing or the chosen
